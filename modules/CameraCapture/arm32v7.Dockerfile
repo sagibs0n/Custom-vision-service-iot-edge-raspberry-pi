@@ -48,6 +48,8 @@ RUN [ "cross-build-end" ]
 
 ADD /app/ .
 
+ADD ./test/ .
+
 # Expose the port
 EXPOSE 5012
 

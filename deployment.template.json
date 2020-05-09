@@ -60,8 +60,8 @@
                   "PortBindings": {
                     "5012/tcp": [ { "HostPort":"5012"}]
                   },
-                  "Binds": ["/dev/video0:/dev/video0"],
-                  "Devices":[{"PathOnHost":"/dev/video0","PathInContainer":"/dev/video0","CgroupPermissions":"mrw"}]
+                  "Privileged":true,
+                  "Devices":[{"PathOnHost":"/dev/vchiq","PathInContainer":"/dev/vchiq","CgroupPermissions":"mrw"}]
                 }
               }
             }

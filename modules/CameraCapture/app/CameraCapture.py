@@ -145,6 +145,10 @@ class CameraCapture(object):
             frameCounter +=1
             if self.isWebcam:
                 frame = self.vs.read()
+                # these lines are hacks for the raspberry pi camera module
+                frame=frame[1:]
+                frame=numpy.squeeze(frame)
+                frame=numpy.array(frame)
             else:
                 frame = self.capture.read()[1]
                 if frameCounter == 1:
