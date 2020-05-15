@@ -24,6 +24,15 @@ SEND_CALLBACKS = 0
 
 def send_to_Hub_callback(strMessage):
     message = IoTHubMessage(bytearray(strMessage, 'utf8'))
+
+    # Setting these properties to allow routing of messages to other endpoints
+    set_content_result = message.set_content_encoding_system_property("utf-8")
+    set_content_type_result = message.set_content_type_system_property("application/json")
+    if set_content_result != 0:
+        print("set_content_encoding_system_property FAILED")
+    if set_content_type_result != 0:
+        print("set_content_type_system_property FAILED")
+
     hubManager.send_event_to_output("output1", message, 0)
 
 # Callback received when the message that we're forwarding is processed.
@@ -54,6 +63,7 @@ class HubManager(object):
         self.client.create_from_environment(protocol)
         self.client.set_option("messageTimeout", self.messageTimeout)
         self.client.set_option("product_info", "edge-camera-capture")
+        self.client.set_option("auto_url_encode_decode", True)  # Not sure why, but this seems to be needed for routing to other endpoints?
         if verbose:
             self.client.set_option("logtrace", 1)  # enables MQTT logging
 
